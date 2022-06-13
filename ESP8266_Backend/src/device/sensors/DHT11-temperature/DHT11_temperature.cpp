@@ -3,8 +3,10 @@
 
 DHTesp dht;
 
+
 void DHT11_temperature::DHT11_Init(int pin)
 {
+
     dht.setup(pin, DHTesp::DHT11);
     delay(dht.getMinimumSamplingPeriod());
     Serial.println("DHT11_temperature::DHT11_Init()");

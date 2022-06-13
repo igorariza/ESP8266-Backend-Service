@@ -1,20 +1,22 @@
 #include "Firebase.h"
-#include <ESP8266WiFi.h>
 #include <SD.h>
-#include <WiFi.h>
-#include <FirebaseESP8266.h>
+#include <Arduino.h>
+#include <Firebase_ESP_Client.h>
+#include <Wire.h>
+
 // Provide the token generation process info.
 #include "addons/TokenHelper.h"
 // Provide the RTDB payload printing info and other helper functions.
 #include "addons/RTDBHelper.h"
-#include <data/wifi/WifiConnect.h>
 #define DEVICE_UID "1X"
-
 // Your Firebase Project Web API Key
 #define API_KEY "AIzaSyClBzhWYZIuelrs_7QLBunvXD26JzXoblo"
 // Your Firebase Realtime database URL
-#define DATABASE_URL "https://smartfarming-cde84-default-rtdb.firebaseio.com"
+#define DATABASE_URL "https://smartfarming-cde84-default-rtdb.firebaseio.com/"
 
+// Insert Authorized Email and Corresponding Password
+#define USER_EMAIL "ggroupar@gmail.com"
+#define USER_PASSWORD "ia2127374"
 // Firebase Realtime Database Object
 FirebaseData fbdo;
 // Firebase Authentication Object
@@ -26,8 +28,8 @@ FirebaseConfig config;
 String device_location = "Temperature";
 // Firebase database path
 String databasePath = "";
-// Firebase Unique Identifier
-String fuid = "";
+// Variable to save USER UID
+String uid;
 // Stores the elapsed time from device start up
 unsigned long elapsedMillis = 0;
 // The frequency of sensor updates to firebase, set to 10seconds
@@ -41,22 +43,46 @@ void FirebaseConnect() {}
 
 void FirebaseConnect::Firebase_Init()
 {
-    // configure firebase API Key
+    delay(1000);
+    // Assign the api key (required)
     config.api_key = API_KEY;
+    // Assign the user sign in credentials
+    auth.user.email = USER_EMAIL;
+    auth.user.password = USER_PASSWORD;
     // configure firebase realtime database url
     config.database_url = DATABASE_URL;
-    // Enable WiFi reconnection
     Firebase.reconnectWiFi(true);
+    fbdo.setResponseSize(4096);
+    // Assign the callback function for the long running token generation task
+    config.token_status_callback = tokenStatusCallback; // see addons/TokenHelper.h
+    // Assign the maximum retry of token generation
+    config.max_token_generation_retry = 5;
+    // Initialize the library with the Firebase authen and config
+    Firebase.begin(&config, &auth);
+    //Getting the user UID might take a few seconds
+    Serial.println("Getting User UID");
+    while ((auth.token.uid) == "")
+    {
+        Serial.print('.');
+        Firebase.begin(&config, &auth);
+        Serial.println(Firebase.authenticated());
+        delay(1000);
+    }
+    // Print user UID
+    
+    Serial.print("User UID: ");
+    Serial.print(uid);
     Serial.println("------------------------------------");
     Serial.println("Sign up new user...");
     // Sign in to firebase Anonymously
     if (Firebase.signUp(&config, &auth, "", ""))
     {
         Serial.println("Success");
+        uid = auth.token.uid.c_str();
         isAuthenticated = true;
         // Set the database path where updates will be loaded for this device
         databasePath = "/" + device_location;
-        fuid = auth.token.uid.c_str();
+        uid = auth.token.uid.c_str();
     }
     else
     {
@@ -65,8 +91,7 @@ void FirebaseConnect::Firebase_Init()
     }
     // Assign the callback function for the long running token generation task, see addons/TokenHelper.h
     config.token_status_callback = tokenStatusCallback;
-    // Initialise the firebase library
-    Firebase.begin(&config, &auth);
+
 }
 
 void FirebaseConnect::Firebase_Update()
@@ -80,8 +105,10 @@ void FirebaseConnect::Firebase_Update()
         // Specify the key value for our data and append it to our path
         String node = databasePath + "/value";
         // Send the value our count to the firebase realtime database
-        if (Firebase.set(fbdo, node.c_str(), count++))
+        if (Firebase.RTDB.setFloat(&fbdo, node.c_str(), count))
         {
+            Serial.println("Success");
+            // Increment the count
             // Print firebase server response
             Serial.println("PASSED");
             Serial.println("PATH: " + fbdo.dataPath());
@@ -113,7 +140,7 @@ void FirebaseConnect::Firebase_Update_Temp(float tmp)
         // Specify the key value for our data and append it to our path
         String node = databasePath + "/temperature";
         // Send the value our count to the firebase realtime database
-        if (Firebase.set(fbdo, node.c_str(), tmp))
+        if (Firebase.RTDB.setFloat(&fbdo, node.c_str(), tmp))
         {
             // Print firebase server response
             Serial.println("PASSED");
