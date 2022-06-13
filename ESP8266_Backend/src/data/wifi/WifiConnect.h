@@ -7,7 +7,8 @@ class WifiConnect
 public:
   WifiConnect();
   void wifi_Init();
-  void status_Wifi();
+  int status_Wifi();
+  void wifi_reconnect();
 };
 
 #endif
