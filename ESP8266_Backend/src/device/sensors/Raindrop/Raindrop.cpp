@@ -1,6 +1,8 @@
 #include "Raindrop.h"
 #include <Arduino.h>
 
+#define rainAnalog A0
+#define rainDigital D2
 // lowest and highest sensor readings:
 const int sensorMin = 0;    // sensor minimum
 const int sensorMax = 1024; // sensor maximum
@@ -12,35 +14,25 @@ Raindrop::Raindrop()
 Raindrop::~Raindrop()
 {
 }
-void Raindrop::Raindrop_Init(int pin)
+void Raindrop::Raindrop_Init()
 {
-    this->pin = pin;
-    this->raindrop_count = 0;
+    // this->pin = pin;
+    pinMode(rainDigital, INPUT);
     delay(500);
-    pinMode(pin, INPUT);
 }
-int Raindrop::Raindrop_Read()
+float *Raindrop::Raindrop_Read()
 {
-    // read the sensor on analog A0:
-    int sensorReading = analogRead(this->pin);
-    // map the sensor range (four options):
-    // ex: 'long int map(long int, long int, long int, long int, long int)'
-    int range = map(sensorReading, sensorMin, sensorMax, 0, 3);
-    // range value:
-    switch (range)
-    {
-    case 0:
-        this->raindrop_count = 0;
-        Serial.println("Rain warning");
-        break;
-    case 1:
-        this->raindrop_count = 1;
-        Serial.println("Not raining");
-    }
-    return this->raindrop_count;
+    float *r = new float[3];
+    int rainDigitalVal = digitalRead(rainDigital);
+    r[0] = rainDigitalVal;
+    int rainAnalogVal = analogRead(rainAnalog);
+    r[1] = rainAnalogVal;
+    r[2] = map(rainAnalogVal, sensorMin, sensorMax, 0, 3);
+    
+    return r;
 }
 int Raindrop::getRaindrop_count()
 {
     Serial.println("Raindrop count: " + String(raindrop_count));
-    return raindrop_count;
+    return 0;
 }

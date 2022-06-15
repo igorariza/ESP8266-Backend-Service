@@ -8,7 +8,9 @@ void DHT11_temperature::DHT11_Init(int pin)
 {
 
     dht.setup(pin, DHTesp::DHT11);
-    delay(dht.getMinimumSamplingPeriod());
+    Serial.println("dht.getStatus()");
+    //Serial.println(dht.getStatus());
+    //delay(dht.getMinimumSamplingPeriod());
     Serial.println("DHT11_temperature::DHT11_Init()");
     // Initialize DHT11 sensor
 }

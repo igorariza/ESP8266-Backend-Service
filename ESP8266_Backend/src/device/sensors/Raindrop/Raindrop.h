@@ -6,13 +6,13 @@ class Raindrop
 {
 private:
     int pin;
-    int raindrop_count;
+    int raindrop_count = 0;
 
 public:
     Raindrop();
     ~Raindrop();
-    void Raindrop_Init(int pin);
-    int Raindrop_Read();
+    void Raindrop_Init();
+    float *Raindrop_Read();
     int getRaindrop_count();
 };
 
