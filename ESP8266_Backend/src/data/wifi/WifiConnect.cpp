@@ -1,15 +1,14 @@
 #include "WifiConnect.h"
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
-// Your WiFi credentials
-#define WIFI_SSID "Home_"
-#define WIFI_PASSWORD "Home_1234"
+#include "../include/config.h"
 
 void WifiConnect() {}
 
+
 void WifiConnect::wifi_Init()
 {
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    WiFi.begin(USER_SETTINGS_WIFI_SSID, USER_SETTINGS_WIFI_PASSWORD);
     Serial.print("Connecting to WiFi ..");
     while (WiFi.status() != WL_CONNECTED)
     {

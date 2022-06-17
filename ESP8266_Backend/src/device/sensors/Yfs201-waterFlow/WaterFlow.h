@@ -6,7 +6,7 @@ class WaterFlow
 {
 public:
     WaterFlow();
-    void WaterFlow_Init(int pin);
+    void WaterFlow_Init();
     float WaterFlow_Read();
     float getFlow();
 };

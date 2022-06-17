@@ -1,15 +1,17 @@
 #include "Rele.h"
 #include "Arduino.h"
 
+#include "../include/config.h"
+
 int Rele::Get_Pin()
 {
-    return this->pin;
+    return USER_SETTINGS_DHT11_PIN;
 }
 
-void Rele::Set_Pin(int pin)
+void Rele::Set_Pin()
 {
     Serial.print("Set_Pin Rele: ");
-    this->pin = pin;
+    this->pin = USER_SETTINGS_DHT11_PIN;
 }
 
 void Rele::Set_Status(bool status)
@@ -24,28 +26,27 @@ bool Rele::Get_Status()
     return this->status;
 }
 
-void Rele::Rele_Init(int pin)
+void Rele::Rele_Init()
 {   
-    Set_Pin(pin);
-    pinMode(this->pin, OUTPUT);
+    pinMode(USER_SETTINGS_DHT11_PIN, OUTPUT);
     Serial.println("Rele::Rele_Init()");
 }
 
 void Rele::Switch_On()
 {
-    digitalWrite(this->pin, HIGH);
+    digitalWrite(USER_SETTINGS_DHT11_PIN, HIGH);
     Serial.println("Rele::Switch_On()");
 }
 
 void Rele::Switch_Off()
 {
-    digitalWrite(this->pin, LOW);
+    digitalWrite(USER_SETTINGS_DHT11_PIN, LOW);
     Serial.println("Rele::Switch_Off()");
 }
 
 void Rele::Switch_Toggle()
 {
-    digitalWrite(this->pin, !digitalRead(this->pin));
+    digitalWrite(USER_SETTINGS_DHT11_PIN, !digitalRead(USER_SETTINGS_DHT11_PIN));
     Serial.println("Rele::Switch_Toggle()");
 }
 
@@ -53,7 +54,7 @@ void Rele::Switch_Status()
 {
     Serial.println("Rele::Switch_Status()");
 
-    if (digitalRead(this->pin) == HIGH)
+    if (digitalRead(USER_SETTINGS_DHT11_PIN) == HIGH)
     {
         Serial.println("Rele::Switch_Status() - HIGH");
     }

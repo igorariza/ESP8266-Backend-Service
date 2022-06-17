@@ -1,8 +1,9 @@
 #include "WaterFlow.h"
+#include "../include/config.h"
 
-void WaterFlow::WaterFlow_Init(int pin)
+void WaterFlow::WaterFlow_Init()
 {
-    pinMode(pin, INPUT);
+    pinMode(USER_SETTINGS_WATERFLOW_ANALOG_PIN, INPUT);
     Serial.println("WaterFlow::WaterFlow_Init()");
 }
 
