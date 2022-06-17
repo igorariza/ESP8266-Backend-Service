@@ -1,13 +1,17 @@
 #include "DHT11_temperature.h"
 #include <DHTesp.h>
 
+#include "../include/config.h"
+
 DHTesp dht;
 
 
-void DHT11_temperature::DHT11_Init(int pin)
+void DHT11_temperature::DHT11_Init()
 {
 
-    dht.setup(pin, DHTesp::DHT11);
+    dht.setup(USER_SETTINGS_DHT11_PIN, DHTesp::DHT11);
+    Serial.println("dht.getStatus()");
+    Serial.println(dht.getStatus());
     delay(dht.getMinimumSamplingPeriod());
     Serial.println("DHT11_temperature::DHT11_Init()");
     // Initialize DHT11 sensor
