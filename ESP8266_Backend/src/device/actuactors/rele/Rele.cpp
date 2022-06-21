@@ -28,38 +28,29 @@ bool Rele::Get_Status()
 
 void Rele::Rele_Init()
 {   
-    pinMode(USER_SETTINGS_DHT11_PIN, OUTPUT);
+    pinMode(USER_SETTINGS_RELE_PIN, OUTPUT);
     Serial.println("Rele::Rele_Init()");
 }
 
 void Rele::Switch_On()
 {
-    digitalWrite(USER_SETTINGS_DHT11_PIN, HIGH);
+    digitalWrite(USER_SETTINGS_RELE_PIN, HIGH);
     Serial.println("Rele::Switch_On()");
 }
 
 void Rele::Switch_Off()
 {
-    digitalWrite(USER_SETTINGS_DHT11_PIN, LOW);
+    digitalWrite(USER_SETTINGS_RELE_PIN, LOW);
     Serial.println("Rele::Switch_Off()");
 }
 
 void Rele::Switch_Toggle()
 {
-    digitalWrite(USER_SETTINGS_DHT11_PIN, !digitalRead(USER_SETTINGS_DHT11_PIN));
+    digitalWrite(USER_SETTINGS_RELE_PIN, !digitalRead(USER_SETTINGS_RELE_PIN));
     Serial.println("Rele::Switch_Toggle()");
 }
 
 void Rele::Switch_Status()
 {
-    Serial.println("Rele::Switch_Status()");
-
-    if (digitalRead(USER_SETTINGS_DHT11_PIN) == HIGH)
-    {
-        Serial.println("Rele::Switch_Status() - HIGH");
-    }
-    else
-    {
-        Serial.println("Rele::Switch_Status() - LOW");
-    }
+    Serial.println("Rele::Switch_Status()" + String(digitalRead(USER_SETTINGS_RELE_PIN)));
 }
