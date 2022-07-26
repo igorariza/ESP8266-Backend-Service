@@ -21,10 +21,10 @@ unsigned long totalMilliLitres;
 
 unsigned long oldTime;
 
-void ICACHE_RAM_ATTR flow() // Interrupt function
-{
-    flow_frequency++;
-}
+// void ICACHE_RAM_ATTR flow() // Interrupt function
+// {
+//     flow_frequency++;
+// }
 
 void WaterFlow::WaterFlow_Init()
 {
@@ -37,8 +37,8 @@ void WaterFlow::WaterFlow_Init()
 
     // digitalWrite(buttonPin, HIGH);
 
-    pinMode(USER_SETTINGS_YFS201_PIN, INPUT);
-    attachInterrupt(digitalPinToInterrupt(USER_SETTINGS_YFS201_PIN), flow, RISING);
+    pinMode(USER_SETTINGS_WATERFLOW_DIGITAL_PIN, INPUT);
+    // attachInterrupt(digitalPinToInterrupt(USER_SETTINGS_WATERFLOW_DIGITAL_PIN), flow, RISING);
 
     sei(); // Enable interrupts
     currentTime = millis();
@@ -50,7 +50,7 @@ float WaterFlow::WaterFlow_Read()
 {
     // Disable the interrupt while calculating flow rate and sending the value to
     // the host
-    detachInterrupt(USER_SETTINGS_YFS201_PIN);
+    detachInterrupt(USER_SETTINGS_WATERFLOW_DIGITAL_PIN);
     flowRate = ((1000.0 / (millis() - oldTime)) * pulseCount) / calibrationFactor;
 
     oldTime = millis();
