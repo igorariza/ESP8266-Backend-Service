@@ -24,10 +24,10 @@ float *Raindrop::Raindrop_Read()
     float *r = new float[3];
     int rainDigitalVal = digitalRead(USER_SETTINGS_WATERFLOW_DIGITAL_PIN);
     r[0] = rainDigitalVal;
-    int rainAnalogVal = analogRead(USER_SETTINGS_WATERFLOW_ANALOG_PIN);
+    int rainAnalogVal = analogRead(USER_SETTINGS_WATERFLOW_PIN);
     r[1] = rainAnalogVal;
     r[2] = map(rainAnalogVal, sensorMin, sensorMax, 0, 3);
-
+    
     return r;
 }
 int Raindrop::getRaindrop_count()
