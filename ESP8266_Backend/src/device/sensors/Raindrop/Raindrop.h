@@ -1,5 +1,5 @@
-#ifndef RAINDROP_H
-#define RAINDROP_H
+#ifndef RAINDROP_H_
+#define RAINDROP_H_
 #include "Arduino.h"
 
 class Raindrop
@@ -16,4 +16,4 @@ public:
     int getRaindrop_count();
 };
 
-#endif
+#endif /* RAINDROP_H_ */

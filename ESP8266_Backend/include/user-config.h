@@ -22,6 +22,12 @@
 // SENSOR RAINDROP SETTINGS
 #define USER_SETTINGS_RAINDROP_PIN D5
 
+// Rtcds3231 SETTINGS
+#define RTC_SDA D6
+#define RTC_SCL D5
+
+// Date Time
+
 
 
 //FC28-SoilMoisture SETTINGS

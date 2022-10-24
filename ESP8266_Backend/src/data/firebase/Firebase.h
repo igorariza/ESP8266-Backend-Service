@@ -1,5 +1,5 @@
-#ifndef FIREBASE_H
-#define FIREBASE_H
+#ifndef FIREBASE_H_
+#define FIREBASE_H_
 #include "Arduino.h"
 
 class FirebaseConnect
@@ -13,4 +13,4 @@ public:
   void Firebase_Update_Light(float light);
 };
 
-#endif
+#endif /* FIREBASE_H_ */

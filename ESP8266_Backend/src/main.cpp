@@ -1,7 +1,8 @@
 #include <Arduino.h>
-#include <ESP8266WiFi.h>
+// #include <ESP8266WiFi.h>
 #include <SimpleTimer.h>
 
+// #include "data/RtcDs/RtcDs.h"
 #include "data/wifi/WifiConnect.h"
 #include "data/firebase/Firebase.h"
 #include "device/sensors/DHT11-temperature/DHT11_temperature.h"
@@ -11,6 +12,7 @@
 #include "device/sensors/FC28-Soil/FC28-SoilMoiusture.h"
 #include "../include/config.h"
 
+// RtcDs rtc;
 WifiConnect *wifi;
 FirebaseConnect *firebase;
 DHT11_temperature *dht11;
@@ -55,7 +57,8 @@ void setup()
 {
   Serial.begin(9600);
   timer.setInterval(1000, rainData);
-  // wifi->wifi_Init();
+  // rtc.RtcInit();
+  wifi->wifi_Init();
   // firebase->Firebase_Init();
   // Serial.println("Firebase_Init()");
   delay(500);
@@ -115,6 +118,6 @@ void loop()
       Serial.println("Error");
     }
     delay(2000);
-    // // setup_wifi();
+    //setup_wifi();
   }
 }
