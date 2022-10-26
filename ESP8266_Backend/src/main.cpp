@@ -2,7 +2,7 @@
 // #include <ESP8266WiFi.h>
 #include <SimpleTimer.h>
 
-// #include "data/RtcDs/RtcDs.h"
+#include "data/RtcDs/RtcDs.h"
 #include "data/wifi/WifiConnect.h"
 #include "data/firebase/Firebase.h"
 #include "device/sensors/DHT11-temperature/DHT11_temperature.h"
@@ -12,7 +12,7 @@
 #include "device/sensors/FC28-Soil/FC28-SoilMoiusture.h"
 #include "../include/config.h"
 
-// RtcDs rtc;
+RtcDs *rtcds;
 WifiConnect *wifi;
 FirebaseConnect *firebase;
 DHT11_temperature *dht11;
@@ -27,6 +27,9 @@ int timeReview = 10000;
 int status_wifi;
 float temperature;
 long lastMsg = 0;
+String rtcstatus;
+String rtsdate;
+String rtcTemperature;
 
 // void setup_wifi()
 // {
@@ -57,67 +60,77 @@ void setup()
 {
   Serial.begin(9600);
   timer.setInterval(1000, rainData);
-  // rtc.RtcInit();
+  Serial.println("Starting Rtcds timer");
+  rtcds -> RtcInit();
   wifi->wifi_Init();
   // firebase->Firebase_Init();
   // Serial.println("Firebase_Init()");
-  delay(500);
-  Serial.println("Starting DHT11 Temperature...");
-  dht11->DHT11_Init();
-  delay(500);
-  Serial.println("Starting WaterFlow...");
-  waterFlow->WaterFlow_Init();
-  delay(500);
-  Serial.println("Starting Rele...");
-  rele->Rele_Init();
-  delay(500);
-  Serial.println("Starting Raindrop...");
-  raindrop->Raindrop_Init();
-  delay(500);
-  Serial.println("Starting SoilMoisture...");
-  fc28_soilMoisture->FC28_SoilMoisture_Init();
+  // delay(500);
+  // Serial.println("Starting DHT11 Temperature...");
+  // dht11->DHT11_Init();
+  // delay(500);
+  // Serial.println("Starting WaterFlow...");
+  // waterFlow->WaterFlow_Init();
+  // delay(500);
+  // Serial.println("Starting Rele...");
+  // rele->Rele_Init();
+  // delay(500);
+  // Serial.println("Starting Raindrop...");
+  // raindrop->Raindrop_Init();
+  // delay(500);
+  // Serial.println("Starting SoilMoisture...");
+  // fc28_soilMoisture->FC28_SoilMoisture_Init();
   delay(2000);
 }
 
 void loop()
 {
   timer.run();
-  long now = millis();
-  delay(500);
-  Serial.println("Looping...");
+  rtcstatus = rtcds->getRtcTime();
+  Serial.println("Rtc time: " + rtcstatus);
+  delay(4000);
+  rtsdate = rtcds->RtcRead();
+  Serial.println("Rtc date: " + rtsdate);
+  delay(4000);
+  rtcTemperature = rtcds->getTemperature();
+  Serial.println("Rtc temperature: " + rtcTemperature);
+  delay(4000);
+  // long now = millis();
+  // delay(500);
+  // Serial.println("Looping...");
   
-  if (now - lastMsg > timeReview)
-  {
-    temperature = dht11->DHT11_Read();
-    Serial.print("Temperature: ");
-    Serial.print(temperature);
-    delay(500);
-    float *r = raindrop->Raindrop_Read();
-    lastMsg = now;
-    if (r[0] == 0)
-    {
-      Serial.println("it's raining : ");
-      Serial.println(r[0]);
-      Serial.println("\n");
-      Serial.println(r[1]);
-      Serial.println("\n");
-      Serial.println(r[2]);
-      delay(20000);
-    }
-    else if (r[0] == 1)
-    {
-      Serial.println("it's not raining : ");
-      Serial.println(r[0]);
-      Serial.println("\n");
-      Serial.println(r[1]);
-      Serial.println("\n");
-      Serial.println(r[2]);
-    }
-    else
-    {
-      Serial.println("Error");
-    }
-    delay(2000);
-    //setup_wifi();
-  }
+  // if (now - lastMsg > timeReview)
+  // {
+  //   temperature = dht11->DHT11_Read();
+  //   Serial.print("Temperature: ");
+  //   Serial.print(temperature);
+  //   delay(500);
+  //   float *r = raindrop->Raindrop_Read();
+  //   lastMsg = now;
+  //   if (r[0] == 0)
+  //   {
+  //     Serial.println("it's raining : ");
+  //     Serial.println(r[0]);
+  //     Serial.println("\n");
+  //     Serial.println(r[1]);
+  //     Serial.println("\n");
+  //     Serial.println(r[2]);
+  //     delay(20000);
+  //   }
+  //   else if (r[0] == 1)
+  //   {
+  //     Serial.println("it's not raining : ");
+  //     Serial.println(r[0]);
+  //     Serial.println("\n");
+  //     Serial.println(r[1]);
+  //     Serial.println("\n");
+  //     Serial.println(r[2]);
+  //   }
+  //   else
+  //   {
+  //     Serial.println("Error");
+  //   }
+  //   delay(2000);
+  //   //setup_wifi();
+  // }
 }

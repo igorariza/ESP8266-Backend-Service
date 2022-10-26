@@ -10,6 +10,7 @@ public:
     String RtcRead();
     String getRtcTime();
     String getRtcDate();
+    String getTemperature();
 };
 
 #endif /* RTCDS3231_H_ */

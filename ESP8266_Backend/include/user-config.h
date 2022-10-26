@@ -25,6 +25,7 @@
 // Rtcds3231 SETTINGS
 #define RTC_SDA D6
 #define RTC_SCL D5
+#define RTC_INIT "07:00:00"
 
 // Date Time
 
