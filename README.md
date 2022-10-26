@@ -1,0 +1,4 @@
+SensorTask : responsable de tomar lecturas del sensor, encender/apagar el riego cuando se cumplan las condiciones apropiadas y registrar todo en el sistema de archivos ESP8266 (SPIFFS).
+ServerTask : ejecuta un servidor HTTP en el ESP8266 que recibe solicitudes REST para obtener información, ejecutar acciones o cambiar la configuración.
+WiFiTask : se conecta a una red WiFi registrada cuando está disponible y monitorea la conexión a Internet continuamente. Si estamos conectados a WiFi pero no podemos llegar a internet, intenta desconectarnos y volver a conectarnos para ver si establecemos acceso a internet por esta vía.
+CloudTask : envía periódicamente el registro de riego a un servidor en la nube personalizado.
