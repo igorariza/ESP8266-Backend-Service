@@ -1,5 +1,5 @@
-#ifndef WIFICONNECT_H
-#define WIFICONNECT_H
+#ifndef WIFICONNECT_H_
+#define WIFICONNECT_H_
 #include "Arduino.h"
 
 class WifiConnect
@@ -11,4 +11,4 @@ public:
   void wifi_reconnect();
 };
 
-#endif
+#endif /* WIFICONNECT_H_ */

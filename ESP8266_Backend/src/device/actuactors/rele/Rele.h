@@ -1,5 +1,5 @@
-#ifndef RELE_H
-#define RELE_H
+#ifndef RELE_H_
+#define RELE_H_
 #include "Arduino.h"
 using namespace std;
 
@@ -22,4 +22,4 @@ private:
     bool status;
 };
 
-#endif // RELE_H
+#endif /* RELE_H_ */

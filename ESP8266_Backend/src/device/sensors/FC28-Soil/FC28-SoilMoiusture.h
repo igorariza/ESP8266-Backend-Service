@@ -1,5 +1,5 @@
-#ifndef FC28_SOILMOISTURE_H
-#define FC28_SOILMOISTURE_H
+#ifndef FC28_SOILMOISTURE_H_
+#define FC28_SOILMOISTURE_H_
 #include "Arduino.h"
 
 
@@ -11,4 +11,4 @@ public:
     float FC28_SoilMoisture_Read();
 };
 
-#endif
+#endif /* FC28_SOILMOISTURE_H_ */

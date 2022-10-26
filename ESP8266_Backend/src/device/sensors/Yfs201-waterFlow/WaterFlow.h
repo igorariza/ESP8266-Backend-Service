@@ -1,5 +1,5 @@
-#ifndef WATERFLOW_H
-#define WATERFLOW_H
+#ifndef WATERFLOW_H_
+#define WATERFLOW_H_
 #include "Arduino.h"
 
 class WaterFlow
@@ -10,4 +10,4 @@ public:
     float WaterFlow_Read();
     float getFlow();
 };
-#endif
+#endif /* WATERFLOW_H_ */
