@@ -8,15 +8,7 @@
 #include "addons/TokenHelper.h"
 // Provide the RTDB payload printing info and other helper functions.
 #include "addons/RTDBHelper.h"
-#define DEVICE_UID "1X"
-// Your Firebase Project Web API Key
-#define API_KEY "AIzaSyClBzhWYZIuelrs_7QLBunvXD26JzXoblo"
-// Your Firebase Realtime database URL
-#define DATABASE_URL "https://smartfarming-cde84-default-rtdb.firebaseio.com/"
-
-// Insert Authorized Email and Corresponding Password
-#define USER_EMAIL "ggroupar@gmail.com"
-#define USER_PASSWORD "ia2127374"
+#include "../include/config.h"
 // Firebase Realtime Database Object
 FirebaseData fbdo;
 // Firebase Authentication Object
