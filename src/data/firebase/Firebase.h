@@ -2,6 +2,7 @@
 #define FIREBASE_H_
 #include "Arduino.h"
 
+
 class FirebaseConnect
 {
 public:
@@ -11,6 +12,7 @@ public:
   void Firebase_Update_Temp(float tmp);
   void Firebase_Update_Humidity(float hum);
   void Firebase_Update_Light(float light);
+  void Firebase_Update_Node();
 };
 
 #endif /* FIREBASE_H_ */

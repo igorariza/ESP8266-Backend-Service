@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include <SimpleTimer.h>
+#include <Firebase_ESP_Client.h>
 
 #include "data/RtcDs/RtcDs.h"
 #include "data/wifi/WifiConnect.h"
@@ -12,6 +13,7 @@
 #include "device/sensors/FC28-Soil/FC28-SoilMoiusture.h"
 #include "../include/config.h"
 
+FirebaseJson json;
 RtcDs *rtcds;
 WifiConnect *wifi;
 FirebaseConnect *firebase;
@@ -30,6 +32,7 @@ int timeReview = 10000;
 int status_wifi;
 float temperature = 25.0;
 long lastMsg = 0;
+
 
 // void setup_wifi()
 // {
@@ -68,13 +71,24 @@ void monitor()
 {
   Serial.println("Monitor");
   temperature = temperature + 1;
-  firebase->Firebase_Update_Temp(temperature);
-  Serial.println("zzzz");
-  ESP.deepSleep(6e+7);
+  
+  //node1->node_name = "Node 1";
+  // node->event = new Event();
+  // node->event->event_id = "1";
+  // node->event->temperature = String(temperature);
+  // node->event->humidity = String(temperature);
+  // node->event->soil = String(temperature);
+  // node->event->rain_drop = String(temperature);
+  // node->event->water_flow = String(temperature);
+  // node->event->image = String(temperature);
 
-  ESP.
+  firebase->Firebase_Update_Node();
+  Serial.println("zzzz");
+  //ESP.deepSleep(6e+7);
+  WiFi.setSleepMode(WIFI_MODEM_SLEEP);
   Serial.println("ready");
-  delay(2000);
+  delay(3000);
+  //WiFi.setSleepMode(WIFI_NONE_SLEEP);
   // float *r = raindrop->Raindrop_Read();
   // if (r[0] == 0)
   // {
@@ -124,20 +138,20 @@ void validateTime(String rtcTime)
   case HOUR_INIT:
     Serial.println("Hour Init");
     initday = true;
-    ESP.deepSleep(3.6e+9);
+    //ESP.deepSleep(3.6e+9);
     break;
   case HOUR_END:
     Serial.println("Hour End");
     initday = false;
-    ESP.deepSleep(3.6e+9);
+    //ESP.deepSleep(3.6e+9);
     break;
   case MAX_TRANSPIRATION_TIME:
     Serial.println("Max Transpiration Time");
-    ESP.deepSleep(3.6e+9);
+    //ESP.deepSleep(3.6e+9);
     break;
   case MAX_ABSORPTION_TIME:
     Serial.println("Max Absorption Time");
-    ESP.deepSleep(3.6e+9);
+    //ESP.deepSleep(3.6e+9);
     break;
   default:
     Serial.println("Mode Normal");
